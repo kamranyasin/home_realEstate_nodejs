@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model user {
+  userid      Int      @id @default(autoincrement())
+  firstname   String?
+  lastname    String?
+  gender      String?
+  email       String   @unique
+  phoneno     BigInt? 
+  dataOfBirth DateTime?
+  password    String   @db.VarChar(255) // Use the appropriate Prisma type annotation for the password column
+  description String?
+  address     String?
+  zipCode     String?
+  media       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  type        String   @default("agent")
+  confirmpw   String?
+}
+
+model properties {
+  propertiesid     Int       @id @default(autoincrement())
+  userid           Int?
+  property_type    String?
+  property_status  String?
+  property_price   Int?
+  max_rooms        Int?
+  beds             Int?
+  baths            Int?
+  area             String?
+  price            Int?
+  agencies         String?
+  description      Json?
+  address          String?
+  zipCode          String?
+  country          String?
+  city             String?
+  land_mark        String? 
+  media            Json?
+  video_url        String? @db.VarChar(3000)
+  additional_features Json?
+  views            BigInt?
+  slug             String?   @unique
+  s_access         String?   @default("admin")
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+
+model project{
+  projectid      Int       @id @default(autoincrement())
+  userid         Int?
+  title          String?   //main heading
+  tags           Json?     // tags such as "brand new", "opportunity", "Installments"
+  project_type   String    // Villa, apparment, house
+  country        String?   // turkey
+  city           String?   // 
+  location_area  String?   // like in which socity
+  life_style     String    // Luxuary, Basic, Household
+  map_pin        String?   // google map
+  starting_price Int?      // basic demanding price 
+  images         Json?     // all images
+  yt_video       String?   @db.VarChar(3000) // youtube url
+  developer_name String?   // who are developing the project
+  first_installment Int?  // first isntallment like 10%, 20%, 30%, 40%
+  construction_status Int? // How much construction is done? 40%, 50%, or handover
+  handover_status    Int? // How much apparments are handedover to customer
+  blue_prints    Json?  // it include image's with price, with area with beds and baths & avaiable 2023
+  features       Json? // like Gym, BBQ etc
+  description    Json? // text editor
+  listing       Json? // table for latest listing apparmtnets for sale
+  slug          String? @unique
+}
+
+
+model blogs {
+  blogid     Int       @id @default(autoincrement())
+  userid     Int?
+  category    String?
+  title       String?
+  content     Json?
+  image            Json?
+  images           Json?
+  views            BigInt?
+  slug             String?   @unique
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
